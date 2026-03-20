@@ -98,11 +98,4 @@ The platform includes secure JWT authentication, role-based collaboration, drag-
 
 ---
 
-## 📄 License
-
-This project is developed for academic and portfolio purposes.  
-You may add an open-source license (e.g., MIT) if required.
-
----
-
 ### ⭐ If you like this project, consider starring the repository!
