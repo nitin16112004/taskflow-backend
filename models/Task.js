@@ -6,48 +6,52 @@ const taskSchema = new mongoose.Schema(
       type: String,
       required: [true, "Task title is required"],
       trim: true,
-      maxlength: 200,
+      maxlength: 200
     },
     description: {
       type: String,
       trim: true,
       default: "",
-      maxlength: 3000,
+      maxlength: 2000
     },
-    boardId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Board",
-      required: true,
-      index: true,
+    status: {
+      type: String,
+      enum: ["Todo", "In Progress", "Review", "Done"],
+      default: "Todo"
     },
-    listId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "List",
-      required: true,
-      index: true,
+    priority: {
+      type: String,
+      enum: ["High", "Medium", "Low"],
+      default: "Medium"
     },
-    assignees: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-      },
-    ],
     dueDate: {
       type: Date,
-      default: null,
+      required: [true, "Due date is required"]
     },
-    position: {
-      type: Number,
-      required: true,
-      default: 0,
-      min: 0,
+    assignedUser: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true
     },
+    board: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Board",
+      required: true
+    },
+    list: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "List",
+      required: true
+    },
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true
+    }
   },
   { timestamps: true }
 );
 
-taskSchema.index({ listId: 1, position: 1 });
-taskSchema.index({ assignees: 1 });
-
 const Task = mongoose.model("Task", taskSchema);
+
 export default Task;

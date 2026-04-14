@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema(
       required: [true, "Name is required"],
       trim: true,
       minlength: 2,
-      maxlength: 100,
+      maxlength: 100
     },
     email: {
       type: String,
@@ -15,19 +15,28 @@ const userSchema = new mongoose.Schema(
       unique: true,
       lowercase: true,
       trim: true,
-      match: [/^\S+@\S+\.\S+$/, "Invalid email format"],
+      match: [/^\S+@\S+\.\S+$/, "Invalid email"]
     },
     password: {
       type: String,
       required: [true, "Password is required"],
       minlength: 6,
-      select: false,
+      select: false
     },
+    role: {
+      type: String,
+      enum: ["admin", "member"],
+      default: "member"
+    },
+    status: {
+      type: String,
+      enum: ["Active", "Inactive"],
+      default: "Active"
+    }
   },
   { timestamps: true }
 );
 
-userSchema.index({ email: 1 }, { unique: true });
-
 const User = mongoose.model("User", userSchema);
+
 export default User;
